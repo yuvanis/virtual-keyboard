@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  transition: .3s;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  margin: 0 10px;
+}
+
+.keyboard_wrapp {
+  max-width: 1008px;
+  width: 100%;
+  background-color: #E7E7E7;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.row {
+  display: flex;
+}
+
+.keys, .speshial_keys {
+  font-family: 'Lato', sans-serif;
+  width: 60px;
+  height: 60px;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
+  transition: .3s;
+  cursor: pointer;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;   
+}
+
+.title {
+  font-family: 'Lato', sans-serif;
+  font-size: 26px;
+  margin-bottom: 40px;
+}
+
+.backspace_key, .capslock_key, .shift_key {
+  width: 120px;
+}
+
+.slash_key, .tab_key {
+  width: 90px;
+}
+
+.shift_right, .enter_key {
+  width: 124px;
+}
+
+.space_key {
+  width: 486px;
+}
+
+.text {
+  max-width: 1008px;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 30px;
+  font-size: 24px;
+  background-color: #F7F7F7;
+  padding: 5px 10px;
+  outline: none;
+}
+
+.keys.active {
+  background-color: #333333;
+  color: #FFFFFF;
+}
+
+.keys.remove {
+  animation: keys_animate 0.4s forwards;
+}
+
+@keyframes keys_animate {
+  0% {
+    background-color: #333333;
+    color: #FFFFFF;
+  }
+  100% {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+}
