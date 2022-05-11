@@ -1,6 +1,8 @@
 const BODY = document.querySelector('body');
 const EN_LOWER = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift', 'Ctrl', 'Win', 'Alt', '', 'Alt', '◀', '▼', '▶', 'Ctrl'];
 const EN_UPPER = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'Caps Lock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '▲', 'Shift', 'Ctrl', 'Win', 'Alt', '', 'Alt', '◀', '▼', '▶', 'Ctrl'];
+const RU_LOWER = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'Caps Lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/', '▲', 'Shift', 'Ctrl', 'Win', 'Alt', '', 'Alt', '◀', '▼', '▶', 'Ctrl'];
+const RU_UPPER = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '/', '▲', 'Shift', 'Ctrl', 'Win', 'Alt', '', 'Alt', '◀', '▼', '▶', 'Ctrl'];
 
 BODY.innerHTML = `
   <div class="container">
@@ -100,18 +102,41 @@ const CAPSLOCK = document.querySelector('.capslock_key');
 const TEXT = document.querySelector('.text');
 
 function setLowerCase() {
-  for (let i = 0; i < KEYS.length; i += 1) {
-    KEYS[i].innerText = EN_LOWER[i];
+  if (localStorage.getItem('language') === 'en') {
+    for (let i = 0; i < KEYS.length; i += 1) {
+      KEYS[i].innerText = EN_LOWER[i];
+    }
+  } else if (localStorage.getItem('language') === 'ru') {
+    for (let i = 0; i < KEYS.length; i += 1) {
+      KEYS[i].innerText = RU_LOWER[i];
+    }
+  }
+}
+
+function setUpperCase() {
+  if (localStorage.getItem('language') === 'en') {
+    for (let i = 0; i < KEYS.length; i += 1) {
+      KEYS[i].innerText = EN_UPPER[i];
+    }
+  } else if (localStorage.getItem('language') === 'ru') {
+    for (let i = 0; i < KEYS.length; i += 1) {
+      KEYS[i].innerText = RU_UPPER[i];
+    }
   }
 }
 
 setLowerCase();
 
-function setUpperCase() {
-  for (let i = 0; i < KEYS.length; i += 1) {
-    KEYS[i].innerText = EN_UPPER[i];
+window.addEventListener('keydown', (e) => {
+  if (e.shiftKey && e.code === 'AltLeft') {
+    if (localStorage.getItem('language') === 'en') {
+      localStorage.setItem('language', 'ru');
+    } else if (localStorage.getItem('language') === 'ru') {
+      localStorage.setItem('language', 'en');
+    }
+    setLowerCase();
   }
-}
+});
 
 KEYS.forEach((elem) => {
   elem.setAttribute('keyName', elem.innerText);
