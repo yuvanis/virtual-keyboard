@@ -107,6 +107,10 @@ function setLocalStorage() {
 
 window.addEventListener('load', setLocalStorage);
 
+for (let i = 0; i < KEYS.length; i += 1) {
+  KEYS[i].innerText = EN_LOWER[i];
+}
+
 function setLowerCase() {
   if (localStorage.getItem('language') === 'en') {
     for (let i = 0; i < KEYS.length; i += 1) {
