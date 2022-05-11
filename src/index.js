@@ -10,19 +10,19 @@ BODY.innerHTML = `
   <div class="keyboard_wrapp">
       <div class="keyboard_keys">
           <div class="row">
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
-              <div class="keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
+              <div class="keys num_keys"></div>
               <div class="keys speshial_keys backspace_key"></div>
           </div>
           <div class="row">
@@ -40,7 +40,7 @@ BODY.innerHTML = `
               <div class="keys"></div>
               <div class="keys"></div>
               <div class="keys slash_key"></div>
-              <div class="keys speshial_keys"></div>
+              <div class="keys speshial_keys delete_key"></div>
           </div>
           <div class="row">
               <div class="keys speshial_keys capslock_key"></div>
@@ -99,6 +99,7 @@ const ALT_RIGHT = document.querySelector('.alt_right');
 const CTRL_LEFT = document.querySelector('.ctrl_left');
 const CTRL_RIGHT = document.querySelector('.ctrl_right');
 const CAPSLOCK = document.querySelector('.capslock_key');
+const DELETE = document.querySelector('.delete_key');
 const TEXT = document.querySelector('.text');
 
 function setLocalStorage() {
@@ -145,93 +146,139 @@ window.addEventListener('keydown', (e) => {
       localStorage.setItem('language', 'en');
     }
     setLowerCase();
+    KEYS.forEach((elem) => {
+      elem.setAttribute('keyName', elem.innerText);
+      elem.setAttribute('upperCaseName', elem.innerText.toUpperCase());
+    });
   }
 });
 
 KEYS.forEach((elem) => {
   elem.setAttribute('keyName', elem.innerText);
-  elem.setAttribute('lowerCaseName', elem.innerText.toLowerCase());
+  elem.setAttribute('upperCaseName', elem.innerText.toUpperCase());
 });
 
 window.addEventListener('keydown', (e) => {
   KEYS.forEach((elem) => {
-    if (e.key === elem.getAttribute('keyName') || e.key === elem.getAttribute('lowerCaseName')) {
+    if (e.key === elem.getAttribute('keyName') || e.key === elem.getAttribute('upperCaseName')) {
       elem.classList.add('active');
     }
-    if (e.code === 'Space') {
-      SPACE.classList.add('active');
-    }
-    if (e.code === 'ShiftLeft') {
-      SHIFT_RIGHT.classList.remove('active');
-      setUpperCase();
-    }
-    if (e.code === 'ShiftRight') {
-      SHIFT_LEFT.classList.remove('active');
-      setUpperCase();
-    }
-    if (e.code === 'AltLeft') {
-      ALT_RIGHT.classList.remove('active');
-    }
-    if (e.code === 'AltRight') {
-      ALT_LEFT.classList.remove('active');
-    }
-    if (e.code === 'ControlLeft') {
-      CTRL_LEFT.classList.add('active');
-    }
-    if (e.code === 'ControlRight') {
-      CTRL_RIGHT.classList.add('active');
-    }
-    if (e.code === 'CapsLock') {
-      CAPSLOCK.classList.toggle('active');
-    }
   });
+  if (e.code === 'Space') {
+    SPACE.classList.add('active');
+  }
+  if (e.code === 'ShiftLeft') {
+    SHIFT_RIGHT.classList.remove('active');
+    setUpperCase();
+  }
+  if (e.code === 'ShiftRight') {
+    SHIFT_LEFT.classList.remove('active');
+    setUpperCase();
+  }
+  if (e.code === 'AltLeft') {
+    ALT_RIGHT.classList.remove('active');
+  }
+  if (e.code === 'AltRight') {
+    ALT_LEFT.classList.remove('active');
+  }
+  if (e.code === 'ControlLeft') {
+    CTRL_LEFT.classList.add('active');
+  }
+  if (e.code === 'ControlRight') {
+    CTRL_RIGHT.classList.add('active');
+  }
+  if (e.code === 'Tab') {
+    e.preventDefault();
+    TEXT.value += '  ';
+  }
+  if (e.code === 'Delete') {
+    DELETE.classList.add('active');
+  }
+  if (e.code === 'ArrowUp') {
+    e.preventDefault();
+    TEXT.value += '▲';
+  }
+  if (e.code === 'ArrowLeft') {
+    e.preventDefault();
+    TEXT.value += '◀';
+  }
+  if (e.code === 'ArrowDown') {
+    e.preventDefault();
+    TEXT.value += '▼';
+  }
+  if (e.code === 'ArrowRight') {
+    e.preventDefault();
+    TEXT.value += '▶';
+  }
+  if (e.code === 'CapsLock') {
+    if (CAPSLOCK.classList.contains('active')) {
+      CAPSLOCK.classList.remove('active');
+      setLowerCase();
+    } else {
+      CAPSLOCK.classList.add('active');
+      setUpperCase();
+    }
+  }
 });
 
 window.addEventListener('keyup', (e) => {
   KEYS.forEach((elem) => {
-    if (e.key === elem.getAttribute('keyName') || e.key === elem.getAttribute('lowerCaseName')) {
+    if (e.key === elem.getAttribute('keyName') || e.key === elem.getAttribute('upperCaseName')) {
       elem.classList.remove('active');
       elem.classList.add('remove');
-    }
-    if (e.code === 'Space') {
-      SPACE.classList.remove('active');
-      SPACE.classList.add('remove');
-    }
-    if (e.code === 'ShiftLeft') {
-      SHIFT_RIGHT.classList.remove('active');
-      SHIFT_RIGHT.classList.remove('remove');
-      setLowerCase();
-    }
-    if (e.code === 'ShiftRight') {
-      SHIFT_LEFT.classList.remove('active');
-      SHIFT_LEFT.classList.remove('remove');
-      setLowerCase();
-    }
-    if (e.code === 'AltLeft') {
-      ALT_RIGHT.classList.remove('active');
-      ALT_RIGHT.classList.remove('remove');
-    }
-    if (e.code === 'AltRight') {
-      ALT_LEFT.classList.remove('active');
-      ALT_LEFT.classList.remove('remove');
-    }
-    if (e.code === 'ControlLeft') {
-      CTRL_LEFT.classList.remove('active');
-      CTRL_LEFT.classList.remove('remove');
-    }
-    if (e.code === 'ControlRight') {
-      CTRL_RIGHT.classList.remove('active');
-      CTRL_RIGHT.classList.remove('remove');
     }
     setTimeout(() => {
       elem.classList.remove('remove');
     }, 200);
   });
+  if (e.code === 'Space') {
+    SPACE.classList.remove('active');
+    SPACE.classList.add('remove');
+  }
+  if (e.code === 'ShiftLeft') {
+    SHIFT_RIGHT.classList.remove('active');
+    SHIFT_RIGHT.classList.remove('remove');
+    setLowerCase();
+  }
+  if (e.code === 'ShiftRight') {
+    SHIFT_LEFT.classList.remove('active');
+    SHIFT_LEFT.classList.remove('remove');
+    setLowerCase();
+  }
+  if (e.code === 'AltLeft') {
+    ALT_RIGHT.classList.remove('active');
+    ALT_RIGHT.classList.remove('remove');
+  }
+  if (e.code === 'AltRight') {
+    ALT_LEFT.classList.remove('active');
+    ALT_LEFT.classList.remove('remove');
+  }
+  if (e.code === 'ControlLeft') {
+    CTRL_LEFT.classList.remove('active');
+    CTRL_LEFT.classList.remove('remove');
+  }
+  if (e.code === 'ControlRight') {
+    CTRL_RIGHT.classList.remove('active');
+    CTRL_RIGHT.classList.remove('remove');
+  }
+  if (e.code === 'Delete') {
+    DELETE.classList.remove('active');
+  }
 });
 
 KEYS.forEach((elem) => {
   elem.addEventListener('mousedown', () => {
-    elem.classList.add('active');
+    if (elem.classList.contains('capslock_key')) {
+      if (CAPSLOCK.classList.contains('active')) {
+        CAPSLOCK.classList.remove('active');
+        setLowerCase();
+      } else {
+        CAPSLOCK.classList.add('active');
+        setUpperCase();
+      }
+    } else {
+      elem.classList.add('active');
+    }
     if (elem.classList.contains('speshial_keys')) {
       TEXT.value += '';
     } else {
@@ -242,10 +289,18 @@ KEYS.forEach((elem) => {
 
 KEYS.forEach((elem) => {
   elem.addEventListener('mouseup', () => {
-    elem.classList.remove('active');
-    elem.classList.add('remove');
-    setTimeout(() => {
-      elem.classList.remove('remove');
-    }, 200);
+    if (elem.classList.contains('capslock_key')) {
+      if (CAPSLOCK.classList.contains('active')) {
+        CAPSLOCK.classList.add('active');
+      } else {
+        CAPSLOCK.classList.remove('active');
+      }
+    } else {
+      elem.classList.remove('active');
+      elem.classList.add('remove');
+      setTimeout(() => {
+        elem.classList.remove('remove');
+      }, 200);
+    }
   });
 });
