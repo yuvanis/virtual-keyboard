@@ -101,6 +101,12 @@ const CTRL_RIGHT = document.querySelector('.ctrl_right');
 const CAPSLOCK = document.querySelector('.capslock_key');
 const TEXT = document.querySelector('.text');
 
+function setLocalStorage() {
+  localStorage.setItem('language', 'en');
+}
+
+window.addEventListener('load', setLocalStorage);
+
 function setLowerCase() {
   if (localStorage.getItem('language') === 'en') {
     for (let i = 0; i < KEYS.length; i += 1) {
